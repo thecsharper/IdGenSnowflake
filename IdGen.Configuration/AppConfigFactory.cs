@@ -12,6 +12,7 @@ namespace IdGen.Configuration;
 public static class AppConfigFactory
 {
     private static readonly ITimeSource defaulttimesource = new DefaultTimeSource(IdGeneratorOptions.DefaultEpoch);
+
     private static readonly ConcurrentDictionary<string, IdGenerator> _namedgenerators = new();
 
     /// <summary>
@@ -38,6 +39,7 @@ public static class AppConfigFactory
             {
                 var ts = idgen.TickDuration == TimeSpan.Zero ? defaulttimesource : new DefaultTimeSource(idgen.Epoch, idgen.TickDuration);
                 var options = new IdGeneratorOptions(new IdStructure(idgen.TimestampBits, idgen.GeneratorIdBits, idgen.SequenceBits), ts, idgen.SequenceOverflowStrategy);
+                
                 return new IdGenerator(idgen.Id, options);
             }
 
